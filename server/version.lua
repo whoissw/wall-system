@@ -1,4 +1,4 @@
---[[ --- Reads the local version from the version.txt file.
+--- Reads the local version from the version.txt file.
 ---@return string|nil The local version or nil if the file cannot be read.
 function readLocalVersion()
     local file = io.open("version.txt","r")
@@ -43,4 +43,4 @@ PerformHttpRequest(remoteVersionUrl,function(statusCode,response,headers)
     else
         print("Erro ao obter a versão remota. Status code: "..statusCode)
     end
-end,"GET","",{ ["Content-Type"] = "text/plain" }) ]]
+end,"GET","",{ ["Content-Type"] = "text/plain" })
