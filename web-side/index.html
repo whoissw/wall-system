@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="jquery.js"></script>
+</head>
+
+<body>
+    <div id="configPanel">
+        <h2>Painel de Configuração</h2>
+        <form id="configForm">
+            <label for="maxDistance">Distância Máxima:</label>
+            <input type="number" id="maxDistance" name="maxDistance" /><br /><br />
+
+            <label for="id">ID:</label>
+            <label class="switch">
+                <input type="checkbox" id="id" name="id" />
+                <span class="slider round"></span>
+            </label><br /><br />
+
+            <label for="source">Sources:</label>
+            <label class="switch">
+                <input type="checkbox" id="source" name="source" />
+                <span class="slider round"></span>
+            </label><br /><br />
+
+            <label for="names">Nomes:</label>
+            <label class="switch">
+                <input type="checkbox" id="names" name="names" />
+                <span class="slider round"></span>
+            </label><br /><br />
+
+            <label for="jobs">Trabalhos:</label>
+            <label class="switch">
+                <input type="checkbox" id="jobs" name="jobs" />
+                <span class="slider round"></span>
+            </label><br /><br />
+
+            <label for="health">Vida/Colete:</label>
+            <label class="switch">
+                <input type="checkbox" id="health" name="health" />
+                <span class="slider round"></span>
+            </label><br /><br />
+
+            <label for="vehicle">Veículos:</label>
+            <label class="switch">
+                <input type="checkbox" id="vehicle" name="vehicle" />
+                <span class="slider round"></span>
+            </label><br /><br />
+
+            <label for="lines">Linhas:</label>
+            <label class="switch">
+                <input type="checkbox" id="lines" name="lines" />
+                <span class="slider round"></span>
+            </label><br /><br />
+
+            <button type="button" id="confirmBtn">Confirmar</button>
+        </form>
+    </div>
+</body>
+
+</html>
