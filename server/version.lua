@@ -18,8 +18,8 @@ function CheckMenuVersion()
             return
         end
 
-        VersionLog("success",("Current Version: %s"):format(currentVersion))
-        VersionLog("success",("Latest Version: %s"):format(text))
+        VersionLog("success",("Current Version: ^0%s"):format(currentVersion))
+        VersionLog("success",("Latest Version: ^0%s"):format(text))
 
         if text:gsub("%s+","") == currentVersion:gsub("%s+","") then
             VersionLog("success","You are running the latest version.")
