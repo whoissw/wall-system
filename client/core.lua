@@ -67,6 +67,7 @@ function CreateBlips()
                 local DistanceToPed = #(PedCoords - GetEntityCoords(PlayerPedId))
 
                 if not PedCoords then goto Skip end
+                if DistanceToPed > MaxDistance then goto Skip end
 
                 if WallConfig["Lines"] then
                     local currentTime = GetGameTimer()
@@ -89,7 +90,6 @@ function CreateBlips()
                     goto Skip
                 end
 
-                if DistanceToPed > MaxDistance then goto Skip end
 
                 local PlayerName = (IsEntityVisible(PlayerPed) and "~w~" or "~r~")..""..Player(PlayerServerId)["state"]["_wall"][2].."~w~"
                 local PlayerWeapon = GetSelectedPedWeapon(PlayerPed) and GetSelectedPedWeapon(PlayerPed) or ""
