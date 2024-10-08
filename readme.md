@@ -11,11 +11,23 @@ Para a instalação do sistema, é necessário adaptar o código de acordo com a
 Não é recomendado atualizar essas informações, a menos que o jogador faça o relogin no servidor. Vale ressaltar que um dos principais problemas relacionados ao *wall* atualmente é a grande quantidade de bytes enviados entre o servidor e o cliente.
 
 ```lua
-local Passport = vRP.Passport(source) or vRP.getUserId(source)
-local Identity = vRP.Identity(Passport) or vRP.userIdentity(Passport)
-local Jobs = vRP.UserJob(Passport,"Primary") or vRP.userJob(Passport,"Primary")
+local Passport = vRP.Passport(source) or vRP.getUserId(source) -- String/Int
+local Identity = vRP.Identity(Passport) or vRP.userIdentity(Passport) -- String
+local Jobs = vRP.UserJob(Passport,"Primary") or vRP.userJob(Passport,"Primary") -- String
 
 Player(source)["state"]:set("_wall",{ Passport,string.sub(Identity["name"],1,10).." "..string.sub(Identity["name2"],1,15),Jobs },true)
+```
+
+## 🔰 Comandos
+
+Existem dois comandos apenas no sistema, um para ativar/desativar o sistema de wall, e outro para configuracao individual de cada staff.
+
+```lua
+/wall
+```
+
+```lua
+/cwall
 ```
 
 ### 📱 Suporte

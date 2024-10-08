@@ -5,6 +5,7 @@ local Tunnel = module("vrp","lib/Tunnel")
 
 src = {}
 Tunnel.bindInterface("wall",src)
+
 ----------------------------------------------------------------------------------------------------
 -- Variables
 ----------------------------------------------------------------------------------------------------
@@ -54,16 +55,16 @@ function CreateBlips()
     CreateThread(function()
         while WallStatus do
             local PlayerPedId = PlayerPedId()
-            local Players     = GetActivePlayers()
+            local Players = GetActivePlayers()
 
             for k,v in pairs(Players) do
-                local PlayerPed      = GetPlayerPed(v)
+                local PlayerPed = GetPlayerPed(v)
                 local PlayerServerId = GetPlayerServerId(v)
 
                 if not PlayerServerId or PlayerPed == 0 or not IsPedAPlayer(PlayerPed) or not DoesEntityExist(PlayerPed) then goto Skip end
                 if v == PlayerId() then goto Skip end
 
-                local PedCoords     = GetEntityCoords(PlayerPed)
+                local PedCoords = GetEntityCoords(PlayerPed)
                 local DistanceToPed = #(PedCoords - GetEntityCoords(PlayerPedId))
 
                 if not PedCoords then goto Skip end
@@ -71,10 +72,10 @@ function CreateBlips()
 
                 if WallConfig["Lines"] then
                     local currentTime = GetGameTimer()
-                    local hue         = (currentTime % 30000) / 15000.0
-                    local r,g,b       = HSVToRGB(hue,1,1)
-                    local cx,cy,cz    = table.unpack(GetEntityCoords(PlayerPedId))
-                    local x,y,z       = table.unpack(GetEntityCoords(PlayerPed))
+                    local hue = (currentTime % 30000) / 15000.0
+                    local r,g,b = HSVToRGB(hue,1,1)
+                    local cx,cy,cz = table.unpack(GetEntityCoords(PlayerPedId))
+                    local x,y,z = table.unpack(GetEntityCoords(PlayerPed))
 
                     DrawLine(cx,cy,cz,x,y,z,r,g,b,255)
                 end
@@ -90,32 +91,30 @@ function CreateBlips()
                     goto Skip
                 end
 
-
-                local PlayerName = (IsEntityVisible(PlayerPed) and "~w~" or "~r~")..""..Player(PlayerServerId)["state"]["_wall"][2].."~w~"
-                local PlayerWeapon = GetSelectedPedWeapon(PlayerPed) and GetSelectedPedWeapon(PlayerPed) or ""
-                local PlayerHealth = GetEntityHealth(PlayerPed)
-                local PlayerInvencible = GetPlayerInvincible(v) and " [~r~GODMODE~w~]" or ""
-                PlayerHealth = PlayerHealth > 101 and "~g~"..PlayerHealth.."~w~"..PlayerInvencible or "~r~MORTO~w~"
+                local PlayerName = (IsEntityVisible(PlayerPed) and "~w~" or "~r~")..Player(PlayerServerId)["state"]["_wall"][2].."~w~"
+                local PlayerWeapon = GetSelectedPedWeapon(PlayerPed) or ""
+                local PlayerHealth = GetEntityHealth(PlayerPed) > 101 and "~g~"..GetEntityHealth(PlayerPed).."~w~"..(GetPlayerInvincible(v) and " [~r~GODMODE~w~]" or "") or "~r~MORTO~w~"
                 local PlayerArmor = "~b~"..GetPedArmour(PlayerPed).."~w~"
 
-                local SideText = ""
-                if Player(PlayerServerId)["state"]["_wall"][3] then
-                    SideText = Player(PlayerServerId)["state"]["_wall"][3][1] or "Desempregado"
-                end
+                local SideText = Player(PlayerServerId)["state"]["_wall"][3] and Player(PlayerServerId)["state"]["_wall"][3] or "Desempregado"
 
-                local Wall = ""
-                if Player(PlayerServerId)["state"]["_wallStatus"] then
-                    Wall = "\n[~g~WALL~w~]"
-                end
+                local Wall = Player(PlayerServerId)["state"]["_wallStatus"] and "\n[~g~WALL~w~]" or ""
 
-                local SourceText                = (WallConfig["Source"] and "\n SOURCE: [~g~"..PlayerServerId.."~w~]") or ""
+                local SourceText = WallConfig["Source"] and "\n SOURCE: [~g~"..PlayerServerId.."~w~]" or ""
+
                 local VehicleOffset,VehicleSeat = GetPedVehicleOffset(PlayerPed)
-                local x                         = (VehicleSeat and VehicleOffset.x or PedCoords.x)
-                local y                         = (VehicleSeat and VehicleOffset.y or PedCoords.y)
-                local z                         = PedCoords.z + 1.0
+                local x = VehicleSeat and VehicleOffset.x or PedCoords.x
+                local y = VehicleSeat and VehicleOffset.y or PedCoords.y
+                local z = PedCoords.z + 1.0
 
-                local TopText                   = (WallConfig["Passport"] and "[~o~"..Player(PlayerServerId)["state"]["_wall"][1].."~w~] " or "")..(WallConfig["Names"] and PlayerName or "")..(WallConfig["Jobs"] and " ("..SideText..") " or "")..(NetworkIsPlayerTalking(v) and "\n~y~FALANDO~w~" or "")
-                local BottomText                = (WallConfig["Health"] and PlayerHealth.." | "..PlayerArmor.."" or "")..SourceText..""..Wall..(WallConfig["Vehicle"] and (VehicleSeat and "\n~y~P"..(VehicleSeat + 2).."~w~" or "") or "")
+                local TopText = (WallConfig["Passport"] and "[~o~"..Player(PlayerServerId)["state"]["_wall"][1].."~w~] " or "")..
+                    (WallConfig["Names"] and PlayerName or "")..
+                    (WallConfig["Jobs"] and " ("..SideText..") " or "")..
+                    (NetworkIsPlayerTalking(v) and "\n~y~FALANDO~w~" or "")
+
+                local BottomText = (WallConfig["Health"] and PlayerHealth.." | "..PlayerArmor or "")..
+                    SourceText..Wall..
+                    (WallConfig["Vehicle"] and (VehicleSeat and "\n~y~P"..(VehicleSeat + 2).."~w~" or "") or "")
 
                 DrawTopText3D(x,y,z,TopText)
                 DrawBottomText3D(x,y,z - 1.2,BottomText,DistanceToPed)
@@ -164,7 +163,7 @@ end
 ---@param h number
 ---@param s number
 ---@param v number
----@return number,number,number
+---@return number, number, number
 function HSVToRGB(h,s,v)
     local r,g,b
 
@@ -217,11 +216,12 @@ function DrawTopText3D(x,y,z,text)
 end
 
 --- Draws the text in 3D.
---- @param x number
---- @param y number
---- @param z number
---- @param text string
---- @param Distance number
+---@param x number
+---@param y number
+---@param z number
+---@param text string
+---@param Distance number
+---@return void
 function DrawBottomText3D(x,y,z,text,Distance)
     local Newz = 0.22
     if Distance > 10 then
@@ -244,12 +244,14 @@ function DrawBottomText3D(x,y,z,text,Distance)
     end
 end
 
+--- Registers the "cwall" command to show the NUI.
+---@return void
 RegisterCommand("cwall",function(_,args)
     SetNuiFocus(true,true)
     SendNUIMessage({ action = "show" })
 end)
 
---- Close the NUI
+--- Closes the NUI.
 ---@return void
 RegisterNuiCallback("HideWall",function(Data,Callback)
     SetNuiFocus(false,false)
@@ -257,7 +259,7 @@ RegisterNuiCallback("HideWall",function(Data,Callback)
     Callback("ok")
 end)
 
---- Get status of options in wall
+--- Gets the status of options in the wall.
 ---@return void
 RegisterNuiCallback("GetStatus",function(Data,Callback)
     local Payload = {
@@ -274,7 +276,7 @@ RegisterNuiCallback("GetStatus",function(Data,Callback)
     Callback(Payload)
 end)
 
---- Update status of options in wall
+--- Updates the status of options in the wall.
 ---@return void
 RegisterNuiCallback("UpdateStatus",function(Data,Callback)
     WallConfig["Passport"] = Data["id"]

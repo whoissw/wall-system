@@ -28,3 +28,5 @@ RegisterCommand("wall",function(source)
         vCLIENT.ToogleWall(source,Player(source)["state"]["_wallStatus"])
     end
 end)
+
+print("^1[WARN]^3 Wall carregado com sucesso.")
