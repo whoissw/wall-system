@@ -20,7 +20,7 @@ Player(source)["state"]:set("_wall",{ Passport,string.sub(Identity["name"],1,10)
 
 ## 🔰 Comandos
 
-Existem dois comandos apenas no sistema, um para ativar/desativar o sistema de wall, e outro para configuracao individual de cada staff.
+O sistema possui apenas dois comandos: um para ativar ou desativar o sistema de wall, e outro para configurar individualmente cada membro da equipe (staff).
 
 ```lua
 /wall
