@@ -29,4 +29,4 @@ RegisterCommand("wall",function(source)
     end
 end)
 
-print("^1[WARN]^3 Wall carregado com sucesso.")
+print("^2[SUCCESS]^7 Wall system loaded successfully.")
