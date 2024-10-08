@@ -12,7 +12,7 @@ end
 
 --- URL of the remote version file on GitHub.
 ---@type string
-local remoteVersionUrl = "https://raw.githubusercontent.com/usuario/repositorio/main/version.txt"
+local remoteVersionUrl = "https://raw.githubusercontent.com/whoissw/wall-system/main/version.txt"
 
 --- The local version read from the version.txt file.
 ---@type string|nil
