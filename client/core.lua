@@ -92,8 +92,10 @@ function CreateBlips()
                 if DistanceToPed > MaxDistance then goto Skip end
 
                 local PlayerName = (IsEntityVisible(PlayerPed) and "~w~" or "~r~")..""..Player(PlayerServerId)["state"]["_wall"][2].."~w~"
+                local PlayerWeapon = GetSelectedPedWeapon(PlayerPed) and GetSelectedPedWeapon(PlayerPed) or ""
+                local PlayerHealth = GetEntityHealth(PlayerPed)
                 local PlayerInvencible = GetPlayerInvincible(v) and " [~r~GODMODE~w~]" or ""
-                local PlayerHealth = GetEntityHealth(PlayerPed) > 101 and "~g~"..PlayerHealth.."~w~"..PlayerInvencible or "~r~MORTO~w~"
+                PlayerHealth = PlayerHealth > 101 and "~g~"..PlayerHealth.."~w~"..PlayerInvencible or "~r~MORTO~w~"
                 local PlayerArmor = "~b~"..GetPedArmour(PlayerPed).."~w~"
 
                 local SideText = ""
