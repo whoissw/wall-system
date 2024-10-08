@@ -92,13 +92,13 @@ function CreateBlips()
                 if DistanceToPed > MaxDistance then goto Skip end
 
                 local PlayerName = (IsEntityVisible(PlayerPed) and "~w~" or "~r~")..""..Player(PlayerServerId)["state"]["_wall"][2].."~w~"
-                local PlayerHealth = GetEntityHealth(PlayerPed) > 101 and "~g~"..PlayerHealth.."~w~"..PlayerInvencible or "~r~MORTO~w~"
                 local PlayerInvencible = GetPlayerInvincible(v) and " [~r~GODMODE~w~]" or ""
+                local PlayerHealth = GetEntityHealth(PlayerPed) > 101 and "~g~"..PlayerHealth.."~w~"..PlayerInvencible or "~r~MORTO~w~"
                 local PlayerArmor = "~b~"..GetPedArmour(PlayerPed).."~w~"
 
                 local SideText = ""
                 if Player(PlayerServerId)["state"]["_wall"][3] then
-                    SideText = Player(PlayerServerId)["state"]["_wall"][3][1]
+                    SideText = Player(PlayerServerId)["state"]["_wall"][3][1] or "Desempregado"
                 end
 
                 local Wall = ""
@@ -112,11 +112,11 @@ function CreateBlips()
                 local y                         = (VehicleSeat and VehicleOffset.y or PedCoords.y)
                 local z                         = PedCoords.z + 1.0
 
-                local topText                   = (WallConfig["Passport"] and "[~o~"..Player(PlayerServerId)["state"]["_wall"][1].."~w~] " or "")..(WallConfig["Names"] and PlayerName or "")..(WallConfig["Jobs"] and " ("..SideText..") " or "")..(NetworkIsPlayerTalking(v) and "\n~y~FALANDO~w~" or "")
-                local bottomText                = (WallConfig["Health"] and PlayerHealth.." | "..PlayerArmor.."" or "")..SourceText..""..Wall..(WallConfig["Vehicle"] and (VehicleSeat and "\n~y~P"..(VehicleSeat + 2).."~w~" or "") or "")
+                local TopText                   = (WallConfig["Passport"] and "[~o~"..Player(PlayerServerId)["state"]["_wall"][1].."~w~] " or "")..(WallConfig["Names"] and PlayerName or "")..(WallConfig["Jobs"] and " ("..SideText..") " or "")..(NetworkIsPlayerTalking(v) and "\n~y~FALANDO~w~" or "")
+                local BottomText                = (WallConfig["Health"] and PlayerHealth.." | "..PlayerArmor.."" or "")..SourceText..""..Wall..(WallConfig["Vehicle"] and (VehicleSeat and "\n~y~P"..(VehicleSeat + 2).."~w~" or "") or "")
 
-                DrawTopText3D(x,y,z,topText)
-                DrawBottomText3D(x,y,z - 1.2,bottomText,DistanceToPed)
+                DrawTopText3D(x,y,z,TopText)
+                DrawBottomText3D(x,y,z - 1.2,BottomText,DistanceToPed)
 
                 ::Skip::
             end
