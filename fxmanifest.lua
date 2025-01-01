@@ -1,6 +1,7 @@
 game "gta5"
 fx_version "cerulean"
-version "1.0.2"
+lua54 "yes"
+version "1.0.3"
 author "swervin_"
 description "A simple script that allows you view all players in the server."
 
